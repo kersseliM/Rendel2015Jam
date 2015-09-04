@@ -33,9 +33,10 @@ public class SmoothCamera : MonoBehaviour
 
     void setValues(cameraValues eCameraValues)
     {
-        Vector3 cameraNewPos =target.position;
+        Vector3 cameraNewPos = target.position;
         cameraNewPos.x = eCameraValues.adjustments.x;
         cameraNewPos.y = eCameraValues.adjustments.y;
+        cameraNewPos.z = -10;
         transform.position = Vector3.Lerp(transform.position, cameraNewPos, Time.deltaTime * eCameraValues.lerpSpeed);
         if (Camera.main.orthographicSize != eCameraValues.zoom)
             Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, eCameraValues.zoom,Time.deltaTime*eCameraValues.lerpSpeed);
