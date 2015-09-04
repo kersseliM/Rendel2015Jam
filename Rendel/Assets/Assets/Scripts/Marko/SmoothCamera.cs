@@ -1,36 +1,43 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SmoothCamera : MonoBehaviour {
-   
-    struct cameraValue
-    {
-        Vector3 adjustments;
-        float Zoom;
-    }
+[System.Serializable]
+public  struct cameraValues
+{
+   public Vector3 adjustments;
+   public float zoom;
+   public float lerpSpeed;
+}
+public class SmoothCamera : MonoBehaviour 
+{
+   [SerializeField]
+    cameraValues AngleSwipeValues;
+   [SerializeField]
+   cameraValues PowerSwipeValues;
+   [SerializeField]
+   cameraValues FlyingValues;
+    public Transform target;
+    [SerializeField]
+    cameraValues IntroValues;
 
-
-    
-    
-    public GameObject Target;
-   
 	void Update () 
     {
         switch(Global.Instance.gameState)
         {
-            case eStates.Intro: break;
-            case eStates.Flying: break;
-            case eStates.PowerSwiping: break;
-            case eStates.AngleSwiping: break;
+            case eStates.Intro: setValues(IntroValues); break;
+            case eStates.Flying: setValues(FlyingValues);break;
+            case eStates.PowerSwiping: setValues(PowerSwipeValues); break;
+            case eStates.AngleSwiping: setValues(AngleSwipeValues); break;
         }
 	}
 
-
-
-    void AngleSwipe()
+    void setValues(cameraValues eCameraValues)
     {
-
-
+        Vector3 cameraNewPos =target.position;
+        cameraNewPos.x = eCameraValues.adjustments.x;
+        cameraNewPos.y = eCameraValues.adjustments.y;
+        transform.position = Vector3.Lerp(transform.position, cameraNewPos, Time.deltaTime * eCameraValues.lerpSpeed);
+        if (Camera.main.orthographicSize != eCameraValues.zoom)
+            Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, eCameraValues.zoom,Time.deltaTime*eCameraValues.lerpSpeed);
     }
-
 }

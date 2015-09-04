@@ -8,6 +8,7 @@ public class SwipeThrow : MonoBehaviour
     public float force;
     public Rigidbody2D VALAman;
     public ForceMode2D forceMode;
+    public GameObject renderer;
     // Use this for initialization
     void Start()
     {
@@ -35,10 +36,7 @@ public class SwipeThrow : MonoBehaviour
                 }
             }
 
-
-
 #if UNITY_EDITOR
-
 
             if (Input.GetMouseButtonDown(0))
                 startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -61,6 +59,14 @@ public class SwipeThrow : MonoBehaviour
         direction = direction.normalized;
         direction = force*direction;
         VALAman.AddForce(direction, forceMode);
+        Invoke("d", 0.1f);
+        Global.Instance.setWorldState(eStates.Flying);
+        
     }
 
+    void d()
+    {
+        VALAman.AddTorque(50, ForceMode2D.Impulse);
+        renderer.SetActive(true);
+    }
 }
