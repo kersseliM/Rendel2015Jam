@@ -1,19 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameState : MonoBehaviour {
 
-
-    public enum States
+public enum eStates
+{
+    Intro,
+    PowerSwiping,
+    AngleSwiping,
+    Flying
+}
+public class GameState : MonoBehaviour 
+{
+	void Start () 
     {
-        Intro,
-        PowerSwiping,
-        AngleSwiping,
-        Flying
-    }
-
-	// Use this for initialization
-	void Start () {
 	
 	}
 	
