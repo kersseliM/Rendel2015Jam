@@ -1,18 +1,18 @@
 fileFormatVersion: 2
 guid: d414f069a862cd844b92885701236926
-timeCreated: 1441457473
+timeCreated: 1441480713
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: BuildingBlock_Tiles_0
-    21300002: BuildingBlock_Tiles_1
-    21300004: BuildingBlock_Tiles_2
-    21300006: BuildingBlock_Tiles_3
-    21300008: BuildingBlock_Tiles_4
-    21300010: BuildingBlock_Tiles_5
-    21300012: BuildingBlock_Tiles_6
-    21300014: BuildingBlock_Tiles_7
-    21300016: BuildingBlock_Tiles_8
+    21300000: TOPLEFT
+    21300002: TOPMIDLE
+    21300004: TOP RIGHT
+    21300006: LEFT MID
+    21300008: cENTER
+    21300010: MIDDLE RIGHT
+    21300012: LEFT DOWN
+    21300014: MIDDLE _LOWER
+    21300016: LOWER RIGHT
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -62,7 +62,7 @@ TextureImporter:
     compressionQuality: 50
   spriteSheet:
     sprites:
-    - name: BuildingBlock_Tiles_0
+    - name: TOPLEFT
       rect:
         serializedVersion: 2
         x: 0
@@ -70,9 +70,9 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: BuildingBlock_Tiles_1
+    - name: TOPMIDLE
       rect:
         serializedVersion: 2
         x: 96
@@ -80,9 +80,9 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: BuildingBlock_Tiles_2
+    - name: TOP RIGHT
       rect:
         serializedVersion: 2
         x: 192
@@ -90,9 +90,9 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: BuildingBlock_Tiles_3
+    - name: LEFT MID
       rect:
         serializedVersion: 2
         x: 0
@@ -100,9 +100,9 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: BuildingBlock_Tiles_4
+    - name: cENTER
       rect:
         serializedVersion: 2
         x: 96
@@ -110,9 +110,9 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: BuildingBlock_Tiles_5
+    - name: MIDDLE RIGHT
       rect:
         serializedVersion: 2
         x: 192
@@ -120,9 +120,9 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: BuildingBlock_Tiles_6
+    - name: LEFT DOWN
       rect:
         serializedVersion: 2
         x: 0
@@ -130,9 +130,9 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: BuildingBlock_Tiles_7
+    - name: MIDDLE _LOWER
       rect:
         serializedVersion: 2
         x: 96
@@ -140,9 +140,9 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: BuildingBlock_Tiles_8
+    - name: LOWER RIGHT
       rect:
         serializedVersion: 2
         x: 192
@@ -150,7 +150,7 @@ TextureImporter:
         width: 96
         height: 96
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

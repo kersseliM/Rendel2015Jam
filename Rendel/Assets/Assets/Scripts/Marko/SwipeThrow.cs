@@ -92,6 +92,7 @@ public class SwipeThrow : MonoBehaviour
         VALAman.AddTorque(50, ForceMode2D.Impulse);
         Global.Instance.setWorldState(eStates.Flying);
         forceHolder = direction;
+
         muutaPaskaa();
         _anim.SetTrigger("AnglePunch");
         foreach (Transform t in renderer.transform)
@@ -99,7 +100,8 @@ public class SwipeThrow : MonoBehaviour
             t.gameObject.SendMessage("a");
         }
 
-      
+        VALAman.velocity = direction;
+        print(direction);
 
     }
 
@@ -120,10 +122,16 @@ public class SwipeThrow : MonoBehaviour
     void d()
     {
         freezeVelocity = false;
+        if (forceHolder.y < 0)
+            forceHolder.y = Mathf.Abs(forceHolder.y);
         VALAman.velocity = forceHolder;
+
+        if (forceHolder == Vector3.zero)
+            forceHolder = Vector3.forward;
 
         foreach (Transform t in renderer.transform)
         {
+            if(t.gameObject!=null)
             t.gameObject.SendMessage("gg");
         }
     }
