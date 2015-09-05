@@ -10,10 +10,11 @@ public class SwipeThrow : MonoBehaviour
     public ForceMode2D forceMode;
     public GameObject renderer;
     bool checkIfStop;
+    VALAmies valaMies;
     // Use this for initialization
     void Start()
     {
-        
+        valaMies = VALAman.gameObject.GetComponent<VALAmies>();
     }
 
     // Update is called once per frame
@@ -24,7 +25,7 @@ public class SwipeThrow : MonoBehaviour
         else
         {
 
-            roundVelocity();
+         //   roundVelocity();
             if (checkIfStop)
             {
                 if (Global.Instance.gameState == eStates.Flying)
@@ -32,7 +33,9 @@ public class SwipeThrow : MonoBehaviour
                     if (VALAman.velocity == Vector2.zero)
                     {
                         checkIfStop = false;
-                        Global.Instance.setWorldState(eStates.AngleSwiping);
+                     //   Global.Instance.setWorldState(eStates.AngleSwiping);
+                        valaMies.startLerp();
+                        d();
                     }
                 }
             }
@@ -81,7 +84,7 @@ public class SwipeThrow : MonoBehaviour
     {
         Vector3 direction = startPos - endPos;
         direction = direction.normalized;
-        direction = force*direction;
+        direction = Global.Instance.totalForce*direction;
         VALAman.AddForce(direction, forceMode);
         VALAman.AddTorque(50, ForceMode2D.Impulse);
         Global.Instance.setWorldState(eStates.Flying);
@@ -117,6 +120,5 @@ public class SwipeThrow : MonoBehaviour
     void b()
     {
         checkIfStop = true;
-
     }
 }

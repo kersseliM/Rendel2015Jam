@@ -33,6 +33,7 @@ public class Talo : MonoBehaviour
         {
             r.isKinematic = false;
             r.gameObject.tag = "TaloPala" ;
+            r.transform.parent = null;
         }
     }
 
@@ -41,7 +42,7 @@ public class Talo : MonoBehaviour
         if (col.gameObject.tag == "VALA" || col.gameObject.tag == "TaloPala")
         {
             releaseTheBodies();
-            Global.Instance.setExplosion(col.transform.position+Vector3.right);
+            gameObject.SetActive(false);
         }
     }
 }
