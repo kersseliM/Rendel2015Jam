@@ -9,6 +9,7 @@ public class Global : MonoBehaviour
         get { return instance; }
     }
     public eStates gameState;
+    GameObject explosion;
 
 	void Awake ()
     {
@@ -17,10 +18,19 @@ public class Global : MonoBehaviour
             instance = this;
         }
         else Destroy(gameObject);
+
+        explosion = GameObject.Find("Explosion");
 	}
 	
     public void setWorldState(eStates state)
     {
         gameState = state;
+    }
+
+
+    public void setExplosion(Vector3 pos)
+    {
+        explosion.transform.position = pos;
+        explosion.SetActive(true);
     }
 }

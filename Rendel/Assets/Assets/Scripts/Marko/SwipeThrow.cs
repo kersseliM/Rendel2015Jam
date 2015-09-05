@@ -9,15 +9,37 @@ public class SwipeThrow : MonoBehaviour
     public Rigidbody2D VALAman;
     public ForceMode2D forceMode;
     public GameObject renderer;
+    bool checkIfStop;
     // Use this for initialization
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (freezeVelocity)
+            VALAman.velocity = Vector2.zero;
+        else
+        {
+
+            roundVelocity();
+            if (checkIfStop)
+            {
+                if (Global.Instance.gameState == eStates.Flying)
+                {
+                    if (VALAman.velocity == Vector2.zero)
+                    {
+                        checkIfStop = false;
+                        Global.Instance.setWorldState(eStates.AngleSwiping);
+                    }
+                }
+            }
+        }
+
+
+
         if (Global.Instance.gameState == eStates.AngleSwiping)
         {
             if (Input.touchCount >= 1)
@@ -51,7 +73,9 @@ public class SwipeThrow : MonoBehaviour
 
 
 
-
+    Vector3 forceHolder;
+    bool freezeVelocity;
+  public  float releaseVelocity;
 
     void calculateDirection()
     {
@@ -59,14 +83,40 @@ public class SwipeThrow : MonoBehaviour
         direction = direction.normalized;
         direction = force*direction;
         VALAman.AddForce(direction, forceMode);
-        Invoke("d", 0.1f);
+        VALAman.AddTorque(50, ForceMode2D.Impulse);
         Global.Instance.setWorldState(eStates.Flying);
-        
+        forceHolder = direction;
+        muutaPaskaa();
     }
 
+    void roundVelocity()
+    {
+        Vector3 vel = VALAman.velocity;
+        vel.x = Mathf.Round(VALAman.velocity.x);
+        vel.y = Mathf.Round(VALAman.velocity.y);
+        VALAman.velocity = vel;
+    }
+    void muutaPaskaa()
+    {
+        renderer.SetActive(true);
+        freezeVelocity = true;
+        Invoke("d", releaseVelocity);
+        Invoke("b", 4);
+    }
     void d()
     {
-        VALAman.AddTorque(50, ForceMode2D.Impulse);
-        renderer.SetActive(true);
+        freezeVelocity = false;
+        VALAman.velocity = forceHolder;
+
+        foreach (Transform t in renderer.transform)
+        {
+            t.gameObject.SendMessage("a");
+        }
+    }
+
+    void b()
+    {
+        checkIfStop = true;
+
     }
 }

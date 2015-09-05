@@ -7,6 +7,7 @@ public  struct cameraValues
    public Vector3 adjustments;
    public float zoom;
    public float lerpSpeed;
+   public Transform target;
 }
 public class SmoothCamera : MonoBehaviour 
 {
@@ -38,7 +39,11 @@ public class SmoothCamera : MonoBehaviour
         cameraNewPos.y = eCameraValues.adjustments.y;
         cameraNewPos.z = -10;
         transform.position = Vector3.Lerp(transform.position, cameraNewPos, Time.deltaTime * eCameraValues.lerpSpeed);
+
         if (Camera.main.orthographicSize != eCameraValues.zoom)
             Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, eCameraValues.zoom,Time.deltaTime*eCameraValues.lerpSpeed);
+
+        if (target != eCameraValues.target)
+            target = eCameraValues.target;
     }
 }
