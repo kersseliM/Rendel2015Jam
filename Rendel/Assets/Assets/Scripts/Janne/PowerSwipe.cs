@@ -23,30 +23,42 @@ public class PowerSwipe : MonoBehaviour
     public Text InfoText;
     public Text timeLeftText;
 
+    //Timer values
     public float IntroDelay = 4;
     public float SwipeTime = 5;
     public int PowerValue = 5;
+    public float StartingNextPhaseDelay = 3;
 
+    //Timers
+    float swipeTimer;
+    float gameTime;
+    float randomizer;
+
+    //Backup values
     float swipeTimeBackup;
     float introDelayBackup;
     float powerValueBackup;
+    float startingNextPhaseDelayBackup;
 
+    //Input handling
     int currentAction;
     string playerInputAction = " ";
     string upAction = "Up";
     string downAction = "Down";
     string leftAction = "Left";
     string rightAction = "Right";
-
-    float swipeTimer;   
-    float gameTime;
-    float randomizer;
     SwipeDirection randomSwipeDir;
     string givenSwipeDir;
     bool giveNewDirection;
     bool startSwipeTimer;
 
+    //Statistics
     int power;
+    int points;
+
+    //Next phase
+    bool startingNextPhase;
+
 
     void Start()
     {
@@ -54,50 +66,66 @@ public class PowerSwipe : MonoBehaviour
         swipeTimer = SwipeTime;
         giveNewDirection = true;
         startSwipeTimer = false;
+        startingNextPhase = false;
     }
 
     void Update()
     {
         if (Global.Instance.gameState == eStates.PowerSwiping)
         {
-            updateTimers();
-            intro();
-            if (gameTime > IntroDelay)
+            if (!startingNextPhase)
             {
-                startSwipeTimer = true;
-                if (giveNewDirection == true)
+                updateTimers();
+                intro();
+                if (gameTime > IntroDelay)
                 {
-                    randomSwipeDir = getRandomEnum<SwipeDirection>();
-                    givenSwipeDir = randomSwipeDir.ToString();
-                    print(givenSwipeDir);
-                    Direction.text = givenSwipeDir;
-                    giveNewDirection = false;
+                    startSwipeTimer = true;
+                    if (giveNewDirection == true)
+                    {
+                        randomSwipeDir = getRandomEnum<SwipeDirection>();
+                        givenSwipeDir = randomSwipeDir.ToString();
+                        print(givenSwipeDir);
+                        Direction.text = givenSwipeDir;
+                        giveNewDirection = false;
+                    }
+                }
+                if (swipeTimer > 0 && startSwipeTimer == true)
+                {
+                    Swipe();
+                    bool tempBool = isCorrectDirection();
+                    if (tempBool)
+                    {
+                        power += PowerValue;
+                        giveNewDirection = true;
+                    }
                 }
             }
-            if (swipeTimer > 0 && startSwipeTimer == true)
-            {
-                Swipe();
-                bool tempBool = isCorrectDirection();
-                if (tempBool)
-                {
-                    power += PowerValue;
-                    giveNewDirection = true;
-                }
-            }
-        }      
+        }
     }
 
     void LateUpdate()
     {
         if (Global.Instance.gameState == eStates.PowerSwiping)
         {
-            timeLeftText.text = Mathf.Round(swipeTimer).ToString();
-            PowerText.text = power.ToString();
-            if (swipeTimer <= 0)
+            if (!startingNextPhase)
             {
-                startNextPhase();
+                timeLeftText.text = Mathf.Round(swipeTimer).ToString();
+                PowerText.text = power.ToString();
+                if (swipeTimer <= 0)
+                {
+                    startNextPhase();
+                }
             }
+            if (startingNextPhase)
+            {
+                StartingNextPhaseDelay += 1 * Time.deltaTime;
+
+                Global.Instance.setWorldState(eStates.AngleSwiping);
+                Global.Instance.totalForce = power;
+            }
+
         }
+
     }
 
     void intro()
@@ -121,6 +149,7 @@ public class PowerSwipe : MonoBehaviour
         swipeTimeBackup = SwipeTime;
         introDelayBackup = IntroDelay;
         powerValueBackup = PowerValue;
+        startingNextPhaseDelayBackup = StartingNextPhaseDelay;
     }
 
     void updateTimers()
@@ -161,8 +190,8 @@ public class PowerSwipe : MonoBehaviour
     {
         Direction.text = "";
         timeLeftText.text = "";
-        Global.Instance.setWorldState(eStates.AngleSwiping);
-        Global.Instance.totalForce = power;
+        startingNextPhase = true;
+
     }
 
     static T getRandomEnum<T>()
