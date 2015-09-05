@@ -37,7 +37,7 @@ public class PowerSwipe : MonoBehaviour
     //Backup values
     float swipeTimeBackup;
     float introDelayBackup;
-    float powerValueBackup;
+    int powerValueBackup;
     float startingNextPhaseDelayBackup;
 
     //Input handling
@@ -59,7 +59,6 @@ public class PowerSwipe : MonoBehaviour
     //Next phase
     bool startingNextPhase;
 
-
     void Start()
     {
         takeBackups();
@@ -76,7 +75,7 @@ public class PowerSwipe : MonoBehaviour
             if (!startingNextPhase)
             {
                 updateTimers();
-                intro();
+                showReadyGo();
                 if (gameTime > IntroDelay)
                 {
                     startSwipeTimer = true;
@@ -109,7 +108,8 @@ public class PowerSwipe : MonoBehaviour
         {
             if (!startingNextPhase)
             {
-                timeLeftText.text = Mathf.Round(swipeTimer).ToString();
+                ///COUNTDOWN HERE
+                showCountDown(swipeTimer);
                 PowerText.text = power.ToString();
                 if (swipeTimer <= 0)
                 {
@@ -118,19 +118,22 @@ public class PowerSwipe : MonoBehaviour
             }
             if (startingNextPhase)
             {
-                StartingNextPhaseDelay += 1 * Time.deltaTime;
+                StartingNextPhaseDelay -= 1 * Time.deltaTime;
 
-                Global.Instance.setWorldState(eStates.AngleSwiping);
-                Global.Instance.totalForce = power;
+                if (StartingNextPhaseDelay <= 0)
+                    StartingNextPhaseDelay = 0;
+                if (StartingNextPhaseDelay <= 0)
+                {
+                    Global.Instance.setWorldState(eStates.AngleSwiping);
+                    Global.Instance.totalForce = power;
+                }
             }
-
         }
-
     }
 
-    void intro()
+    void showReadyGo()
     {
-        if (gameTime >= 0 && gameTime < 3)
+        if (gameTime >= 0 && gameTime < IntroDelay - 1)
         {
             InfoText.text = "READY";
         }
@@ -180,6 +183,8 @@ public class PowerSwipe : MonoBehaviour
     {
         print("Power Swipe Reset");
         swipeTimer = swipeTimeBackup;
+        IntroDelay = introDelayBackup;
+        PowerValue = powerValueBackup;
         gameTime = 0;
         startSwipeTimer = false;
         giveNewDirection = false;
@@ -191,7 +196,11 @@ public class PowerSwipe : MonoBehaviour
         Direction.text = "";
         timeLeftText.text = "";
         startingNextPhase = true;
+    }
 
+    void showCountDown(float timer)
+    {
+        timeLeftText.text = Mathf.Round(timer).ToString();
     }
 
     static T getRandomEnum<T>()
@@ -200,9 +209,6 @@ public class PowerSwipe : MonoBehaviour
         T randomValue = (T)arr.GetValue(UnityEngine.Random.Range(0, arr.Length));
         return randomValue;
     }
-
-
-
 
     public void Swipe()
     {
@@ -246,10 +252,8 @@ public class PowerSwipe : MonoBehaviour
         }
 #endif
 
-#if UNITY_ANDROID
-    public void Swipe()
-    {
-        if (Input.touches.Length > 0)
+//#if UNITY_ANDROID
+        if (Input.touchCount > 0)
         {
             Touch t = Input.GetTouch(0);
             if (t.phase == TouchPhase.Began)
@@ -279,13 +283,12 @@ public class PowerSwipe : MonoBehaviour
                 }
                 if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
                 {
-                     //swipe right
-                     playerInputAction = rightAction;
+                    //swipe right
+                    playerInputAction = rightAction;
                 }
             }
         }
-    }
-#endif
+//#endif
     }
 
 }
