@@ -230,8 +230,6 @@ public class PowerSwipe : MonoBehaviour
 
     public void Swipe()
     {
-
-#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
         {
             firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
@@ -268,45 +266,5 @@ public class PowerSwipe : MonoBehaviour
                 playerInputAction = rightAction;
             }
         }
-#endif
-
-//#if UNITY_ANDROID
-        if (Input.touchCount > 0)
-        {
-            Touch t = Input.GetTouch(0);
-            if (t.phase == TouchPhase.Began)
-            {
-                firstPressPos = new Vector2(t.position.x, t.position.y);
-            }
-            if (t.phase == TouchPhase.Ended)
-            {
-                secondPressPos = new Vector2(t.position.x, t.position.y);
-                currentSwipe = new Vector3(secondPressPos.x + firstPressPos.y, secondPressPos.y - firstPressPos.y);
-                currentSwipe.Normalize();
-
-                if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-                {
-                    //swipe up
-                    playerInputAction = upAction;
-                }
-                if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-                {
-                    //swipe down
-                    playerInputAction = downAction;
-                }
-                if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
-                {
-                    //swipe left
-                    playerInputAction = leftAction;
-                }
-                if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
-                {
-                    //swipe right
-                    playerInputAction = rightAction;
-                }
-            }
-        }
-//#endif
     }
-
 }
