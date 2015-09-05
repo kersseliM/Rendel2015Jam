@@ -28,12 +28,7 @@ public class VALAmies : MonoBehaviour
 
             if(percentage >=1)
             {
-                isLerping = false;
-                Global.Instance.setWorldState(eStates.PowerSwiping);
-                rb.rotation =0;
-                rb.angularVelocity = 0;
-                rb.velocity = Vector2.zero;
-                rb.isKinematic = false;
+                endLerp();
             }
         }
     }
@@ -43,6 +38,10 @@ public class VALAmies : MonoBehaviour
     {
         if (col.gameObject.tag == "TaloPala" || col.gameObject.tag == "Talo")
         Global.Instance.setExplosion(col.transform.position + Vector3.right);
+
+        if (col.gameObject.tag == "Talo")
+            rb.velocity = rb.velocity * 1.3f;
+
     }
 
     public void startLerp()
@@ -52,6 +51,17 @@ public class VALAmies : MonoBehaviour
         time = Time.time;
         startPosition = transform.position;
         rb.velocity = Vector2.zero;
+    
+    }
+    void endLerp()
+    {
+
+        isLerping = false;
+        Global.Instance.setWorldState(eStates.PowerSwiping);
+        rb.rotation = 0;
+        rb.angularVelocity = 0;
+        rb.velocity = Vector2.zero;
+        rb.isKinematic = false;
 
     }
 }
