@@ -23,6 +23,11 @@ public class PowerSwipe : MonoBehaviour
     public Text InfoText;
     public Text timeLeftText;
 
+    //Test timers
+    public Text testTimerIntro;
+    public Text testTimerSwipeTime;
+    public Text testTimerNextScene;
+
     //Timer values
     public float IntroDelay = 4;
     public float SwipeTime = 5;
@@ -77,7 +82,7 @@ public class PowerSwipe : MonoBehaviour
             if (!startingNextPhase)
             {
                 updateTimers();
-                //showReadyGo();
+                showReadyGo(IntroDelay);
                 if (gameTime > IntroDelay)
                 {
                     startSwipeTimer = true;
@@ -132,10 +137,14 @@ public class PowerSwipe : MonoBehaviour
                 }
             }
         }
+        testTimerIntro.text = "INTRO: " + IntroDelay.ToString();
+        testTimerSwipeTime.text = "SWIPETIME:" + SwipeTimer.ToString();
+        testTimerNextScene.text = "NEXTSCENE:" + StartingNextPhaseDelay.ToString();
     }
 
     void showReadyGo(float timer)
     {
+        print("CALLED READY_GO");
         if (timer > 1)
         {
             InfoText.text = "READY";
