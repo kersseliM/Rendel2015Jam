@@ -23,6 +23,7 @@ public class PowerSwipe1 : MonoBehaviour
     public Text InfoText;
     public Text timeLeftText;
     public Animator anim;
+    public Animator arrowAnim;
 
     //Test timers
     public Text testTimerIntro;
@@ -92,8 +93,6 @@ public class PowerSwipe1 : MonoBehaviour
                     {
                         randomSwipeDir = getRandomEnum<SwipeDirection>();
                         givenSwipeDir = randomSwipeDir.ToString();
-                        print(givenSwipeDir);
-                        Direction.text = givenSwipeDir;
                         giveNewDirection = false;
                     }
                 }
@@ -109,6 +108,7 @@ public class PowerSwipe1 : MonoBehaviour
                         giveNewDirection = true;
                     }
                 }
+                updateArrows();
             }
         }
     }
@@ -159,6 +159,26 @@ public class PowerSwipe1 : MonoBehaviour
         if (timer >= 0)
         {
             InfoText.text = "";
+        }
+    }
+
+    void updateArrows()
+    {
+        if (givenSwipeDir == "Up")
+        {
+            arrowAnim.SetTrigger("Up");
+        }
+        if (givenSwipeDir == "Down")
+        {
+            arrowAnim.SetTrigger("Down");
+        }
+        if (givenSwipeDir == "Left")
+        {
+            arrowAnim.SetTrigger("Left");
+        }
+        if (givenSwipeDir == "Right")
+        {
+            arrowAnim.SetTrigger("Right");
         }
     }
 
@@ -215,6 +235,7 @@ public class PowerSwipe1 : MonoBehaviour
 
     void startNextPhase()
     {
+        arrowAnim.SetTrigger("None");
         Direction.text = "";
         timeLeftText.text = "";
         startingNextPhase = true;
@@ -245,27 +266,24 @@ public class PowerSwipe1 : MonoBehaviour
 
             currentSwipe.Normalize();
 
+            //swipe up
             if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
             {
-                Debug.Log("up swipe");
                 playerInputAction = upAction;
             }
             //swipe down
             if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
             {
-                Debug.Log("down swipe");
                 playerInputAction = downAction;
             }
             //swipe left
             if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
             {
-                Debug.Log("left swipe");
                 playerInputAction = leftAction;
             }
             //swipe right
             if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
             {
-                Debug.Log("right swipe");
                 playerInputAction = rightAction;
             }
         }
