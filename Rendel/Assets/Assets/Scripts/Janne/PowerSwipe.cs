@@ -23,81 +23,109 @@ public class PowerSwipe : MonoBehaviour
     public Text InfoText;
     public Text timeLeftText;
 
+    //Timer values
     public float IntroDelay = 4;
     public float SwipeTime = 5;
     public int PowerValue = 5;
+    public float StartingNextPhaseDelay = 3;
 
+    //Timers
+    float swipeTimer;
+    float gameTime;
+    float randomizer;
+
+    //Backup values
     float swipeTimeBackup;
+    float introDelayBackup;
+    float powerValueBackup;
+    float startingNextPhaseDelayBackup;
 
+    //Input handling
     int currentAction;
     string playerInputAction = " ";
     string upAction = "Up";
     string downAction = "Down";
     string leftAction = "Left";
     string rightAction = "Right";
-
-    float swipeTimer;   
-    float gameTime;
-    float randomizer;
     SwipeDirection randomSwipeDir;
     string givenSwipeDir;
     bool giveNewDirection;
     bool startSwipeTimer;
 
+    //Statistics
     int power;
+    int points;
+
+    //Next phase
+    bool startingNextPhase;
+
 
     void Start()
     {
-        swipeTimeBackup = SwipeTime;
+        takeBackups();
         swipeTimer = SwipeTime;
         giveNewDirection = true;
         startSwipeTimer = false;
+        startingNextPhase = false;
     }
 
     void Update()
     {
         if (Global.Instance.gameState == eStates.PowerSwiping)
         {
-            updateTimers();
-            intro();
-            if (gameTime > IntroDelay)
+            if (!startingNextPhase)
             {
-                startSwipeTimer = true;
-                if (giveNewDirection == true)
+                updateTimers();
+                intro();
+                if (gameTime > IntroDelay)
                 {
-                    randomSwipeDir = getRandomEnum<SwipeDirection>();
-                    givenSwipeDir = randomSwipeDir.ToString();
-                    print(givenSwipeDir);
-                    Direction.text = givenSwipeDir;
-                    giveNewDirection = false;
+                    startSwipeTimer = true;
+                    if (giveNewDirection == true)
+                    {
+                        randomSwipeDir = getRandomEnum<SwipeDirection>();
+                        givenSwipeDir = randomSwipeDir.ToString();
+                        print(givenSwipeDir);
+                        Direction.text = givenSwipeDir;
+                        giveNewDirection = false;
+                    }
+                }
+                if (swipeTimer > 0 && startSwipeTimer == true)
+                {
+                    Swipe();
+                    bool tempBool = isCorrectDirection();
+                    if (tempBool)
+                    {
+                        power += PowerValue;
+                        giveNewDirection = true;
+                    }
                 }
             }
-
-            if (swipeTimer > 0 && startSwipeTimer == true)
-            {
-                Swipe();
-                bool tempBool = isCorrectDirection();
-                if (tempBool)
-                {
-                    power += PowerValue;
-                    giveNewDirection = true;
-                }
-            }
-
-        }      
+        }
     }
 
     void LateUpdate()
     {
         if (Global.Instance.gameState == eStates.PowerSwiping)
         {
-            timeLeftText.text = Mathf.Round(swipeTimer).ToString();
-            PowerText.text = power.ToString();
-            if (swipeTimer <= 0)
+            if (!startingNextPhase)
             {
-                startNextPhase();
+                timeLeftText.text = Mathf.Round(swipeTimer).ToString();
+                PowerText.text = power.ToString();
+                if (swipeTimer <= 0)
+                {
+                    startNextPhase();
+                }
             }
+            if (startingNextPhase)
+            {
+                StartingNextPhaseDelay += 1 * Time.deltaTime;
+
+                Global.Instance.setWorldState(eStates.AngleSwiping);
+                Global.Instance.totalForce = power;
+            }
+
         }
+
     }
 
     void intro()
@@ -116,13 +144,20 @@ public class PowerSwipe : MonoBehaviour
         }
     }
 
+    void takeBackups()
+    {
+        swipeTimeBackup = SwipeTime;
+        introDelayBackup = IntroDelay;
+        powerValueBackup = PowerValue;
+        startingNextPhaseDelayBackup = StartingNextPhaseDelay;
+    }
+
     void updateTimers()
     {
         if (startSwipeTimer == true)
         {
             swipeTimer -= 1 * Time.deltaTime;
         }
-
         if (swipeTimer <= 0)
         {
             swipeTimer = 0;
@@ -143,7 +178,7 @@ public class PowerSwipe : MonoBehaviour
     }
     public void resetCurrentState()
     {
-        print("Power Swipe Resetteed");
+        print("Power Swipe Reset");
         swipeTimer = swipeTimeBackup;
         gameTime = 0;
         startSwipeTimer = false;
@@ -155,8 +190,8 @@ public class PowerSwipe : MonoBehaviour
     {
         Direction.text = "";
         timeLeftText.text = "";
-        Global.Instance.setWorldState(eStates.AngleSwiping);
-        Global.Instance.totalForce = power;
+        startingNextPhase = true;
+
     }
 
     static T getRandomEnum<T>()
@@ -167,86 +202,49 @@ public class PowerSwipe : MonoBehaviour
     }
 
 
+
+
     public void Swipe()
     {
-#if UNITY_ANDROID
-        if (Input.touches.Length > 0)
-        {
-            Touch t = Input.GetTouch(0);
-            if (t.phase == TouchPhase.Began)
-            {
-                firstPressPos = new Vector2(t.position.x, t.position.y);
-            }
-            if (t.phase == TouchPhase.Ended)
-            {
-                secondPressPos = new Vector2(t.position.x, t.position.y);
-                currentSwipe = new Vector3(secondPressPos.x + firstPressPos.y, secondPressPos.y - firstPressPos.y);
-                currentSwipe.Normalize();
 
-                if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-                {
-                    //swipe up
-                    playerInputAction = upAction;
-                }
-                if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-                {
-                    //swipe down
-                    playerInputAction = downAction;
-                }
-                if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
-                {
-                    //swipe left
-                    playerInputAction = leftAction;
-                }
-                if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
-                {
-                    //swipe right
-                    playerInputAction = rightAction;
-                }
-            }
-
-        }
-#endif
 #if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
-            if (Input.GetMouseButtonDown(0))
+            currentSwipe = new Vector2(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y);
+
+            currentSwipe.Normalize();
+
+            if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
             {
-                firstPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                Debug.Log("up swipe");
+                playerInputAction = upAction;
             }
-            if (Input.GetMouseButtonUp(0))
+            //swipe down
+            if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
             {
-                secondPressPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
-                currentSwipe = new Vector2(secondPressPos.x - firstPressPos.x, secondPressPos.y - firstPressPos.y);
-
-                currentSwipe.Normalize();
-
-                if (currentSwipe.y > 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-                {
-                    Debug.Log("up swipe");
-                    playerInputAction = upAction;
-                }
-                //swipe down
-                if (currentSwipe.y < 0 && currentSwipe.x > -0.5f && currentSwipe.x < 0.5f)
-                {
-                    Debug.Log("down swipe");
-                    playerInputAction = downAction;
-                }
-                //swipe left
-                if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
-                {
-                    Debug.Log("left swipe");
-                    playerInputAction = leftAction;
-                }
-                //swipe right
-                if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
-                {
-                    Debug.Log("right swipe");
-                    playerInputAction = rightAction;
-                }
+                Debug.Log("down swipe");
+                playerInputAction = downAction;
             }
+            //swipe left
+            if (currentSwipe.x < 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
+            {
+                Debug.Log("left swipe");
+                playerInputAction = leftAction;
+            }
+            //swipe right
+            if (currentSwipe.x > 0 && currentSwipe.y > -0.5f && currentSwipe.y < 0.5f)
+            {
+                Debug.Log("right swipe");
+                playerInputAction = rightAction;
+            }
+        }
 #endif
 
-        }
-
+    }
 }

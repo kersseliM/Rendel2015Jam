@@ -7,7 +7,8 @@ public enum eStates
     Intro,
     PowerSwiping,
     AngleSwiping,
-    Flying
+    Flying,
+    Endgame
 }
 public class GameState : MonoBehaviour 
 {
