@@ -11,8 +11,12 @@ public class EndGame : MonoBehaviour
 
     public InputField inputField;
     public GameObject masterScoreSystem;
-
+    public Canvas highScoreCanvas;
+  
     private MasterScoreSystem mss;
+    private Canvas hsc;
+
+
 
     public void AddName(string nameInput)
     {
@@ -34,6 +38,19 @@ public class EndGame : MonoBehaviour
     void Awake()
     {
         mss = masterScoreSystem.GetComponent<MasterScoreSystem>();
+        hsc = highScoreCanvas.GetComponent<Canvas>();
+    }
+
+    void Update()
+    {
+        if (Global.Instance.gameState == eStates.Endgame)
+        {
+            hsc.enabled = true;
+        }
+        else
+        {
+            hsc.enabled = false;
+        }
     }
 
     //public void Get
