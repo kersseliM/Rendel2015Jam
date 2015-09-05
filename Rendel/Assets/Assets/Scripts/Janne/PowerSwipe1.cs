@@ -22,6 +22,7 @@ public class PowerSwipe1 : MonoBehaviour
     public Text PowerText;
     public Text InfoText;
     public Text timeLeftText;
+    public Animator anim;
 
     //Test timers
     public Text testTimerIntro;
@@ -102,6 +103,8 @@ public class PowerSwipe1 : MonoBehaviour
                     bool tempBool = isCorrectDirection();
                     if (tempBool)
                     {
+                        anim.SetTrigger("Punch");
+                        Global.Instance.playPunch();
                         power += PowerValue;
                         giveNewDirection = true;
                     }
@@ -207,6 +210,7 @@ public class PowerSwipe1 : MonoBehaviour
         giveNewDirection = true;
         startIntroTimer = true;
         startingNextPhase = false;
+        anim.SetTrigger("Idle");
     }
 
     void startNextPhase()

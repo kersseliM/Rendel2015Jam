@@ -80,6 +80,7 @@ public class SwipeThrow : MonoBehaviour
     Vector3 forceHolder;
     bool freezeVelocity;
   public  float releaseVelocity;
+  public Animator _anim;
 
     void calculateDirection()
     {
@@ -92,11 +93,13 @@ public class SwipeThrow : MonoBehaviour
         Global.Instance.setWorldState(eStates.Flying);
         forceHolder = direction;
         muutaPaskaa();
-
+        _anim.SetTrigger("AnglePunch");
         foreach (Transform t in renderer.transform)
         {
             t.gameObject.SendMessage("a");
         }
+
+      
 
     }
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class EndGame : MonoBehaviour
 {
-    string name = "";
+    string name = "name";
     int score = 0;
     List<Scores> highScore;
 
@@ -27,13 +27,13 @@ public class EndGame : MonoBehaviour
     {
         score = mss.GetScore();
         print(score);
-        HighScoreManager._instance.SaveHighScore(name, score);
+        HighScoreManager2._instance.SaveHighScore(name, score);
         //highScore = HighScoreManager._instance.GetHighScore();
     }
 
     public void GetLeaderboard()
     {
-        highScore = HighScoreManager._instance.GetHighScore();
+        highScore = HighScoreManager2._instance.GetHighScore();
     }
 
     void Awake()
@@ -58,6 +58,4 @@ public class EndGame : MonoBehaviour
             hsc.enabled = false;
         }
     }
-
-    //public void Get
 }
