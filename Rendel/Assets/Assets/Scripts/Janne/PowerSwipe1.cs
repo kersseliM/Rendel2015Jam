@@ -66,6 +66,7 @@ public class PowerSwipe1 : MonoBehaviour
 
     //Next phase
     bool startingNextPhase;
+    bool doUpdateArrows;
 
     void Start()
     {
@@ -75,6 +76,7 @@ public class PowerSwipe1 : MonoBehaviour
         startSwipeTimer = false;
         startingNextPhase = false;
         startIntroTimer = true;
+        doUpdateArrows = true;
     }
 
     void Update()
@@ -119,7 +121,6 @@ public class PowerSwipe1 : MonoBehaviour
         {
             if (!startingNextPhase)
             {
-                ///COUNTDOWN HERE
                 showCountDown(SwipeTimer);
                 PowerText.text = power.ToString();
                 if (SwipeTimer <= 0)
@@ -135,6 +136,7 @@ public class PowerSwipe1 : MonoBehaviour
                     StartingNextPhaseDelay = 0;
                 if (StartingNextPhaseDelay <= 0)
                 {
+                    arrowAnim.SetTrigger("None");
                     Global.Instance.setWorldState(eStates.AngleSwiping);
                     Global.Instance.totalForce = power;
                 }
@@ -231,11 +233,12 @@ public class PowerSwipe1 : MonoBehaviour
         startIntroTimer = true;
         startingNextPhase = false;
         anim.SetTrigger("Idle");
+        doUpdateArrows = true;
     }
 
     void startNextPhase()
     {
-        arrowAnim.SetTrigger("None");
+        doUpdateArrows = false;
         Direction.text = "";
         timeLeftText.text = "";
         startingNextPhase = true;
