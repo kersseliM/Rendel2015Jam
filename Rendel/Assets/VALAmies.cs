@@ -40,7 +40,7 @@ public class VALAmies : MonoBehaviour
         Global.Instance.setExplosion(col.transform.position + Vector3.right);
 
         if (col.gameObject.tag == "Talo")
-            rb.velocity = rb.velocity * 1.3f;
+            rb.velocity = rb.velocity*2;
 
     }
 
