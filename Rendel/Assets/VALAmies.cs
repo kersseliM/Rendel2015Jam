@@ -29,7 +29,7 @@ public class VALAmies : MonoBehaviour
             if(percentage >=1)
             {
                 isLerping = false;
-                Global.Instance.setWorldState(eStates.AngleSwiping);
+                Global.Instance.setWorldState(eStates.PowerSwiping);
                 rb.rotation =0;
                 rb.angularVelocity = 0;
                 rb.velocity = Vector2.zero;

@@ -27,6 +27,8 @@ public class PowerSwipe : MonoBehaviour
     public float SwipeTime = 5;
     public int PowerValue = 5;
 
+    float swipeTimeBackup;
+
     int currentAction;
     string playerInputAction = " ";
     string upAction = "Up";
@@ -46,6 +48,7 @@ public class PowerSwipe : MonoBehaviour
 
     void Start()
     {
+        swipeTimeBackup = SwipeTime;
         swipeTimer = SwipeTime;
         giveNewDirection = true;
         startSwipeTimer = false;
@@ -64,6 +67,7 @@ public class PowerSwipe : MonoBehaviour
                 {
                     randomSwipeDir = getRandomEnum<SwipeDirection>();
                     givenSwipeDir = randomSwipeDir.ToString();
+                    print(givenSwipeDir);
                     Direction.text = givenSwipeDir;
                     giveNewDirection = false;
                 }
@@ -79,17 +83,21 @@ public class PowerSwipe : MonoBehaviour
                     giveNewDirection = true;
                 }
             }
-            if (swipeTimer <= 0)
-            {
-                startNextPhase();
-            }
+
         }      
     }
 
     void LateUpdate()
     {
-        timeLeftText.text = Mathf.Round(swipeTimer).ToString();      
-        PowerText.text = power.ToString();
+        if (Global.Instance.gameState == eStates.PowerSwiping)
+        {
+            timeLeftText.text = Mathf.Round(swipeTimer).ToString();
+            PowerText.text = power.ToString();
+            if (swipeTimer <= 0)
+            {
+                startNextPhase();
+            }
+        }
     }
 
     void intro()
@@ -133,14 +141,22 @@ public class PowerSwipe : MonoBehaviour
             return false;
         }
     }
-    void resetCurrentState()
+    public void resetCurrentState()
     {
+        print("Power Swipe Resetteed");
+        swipeTimer = swipeTimeBackup;
         gameTime = 0;
+        startSwipeTimer = false;
+        giveNewDirection = false;
+        giveNewDirection = true;
     }
 
     void startNextPhase()
     {
+        Direction.text = "";
+        timeLeftText.text = "";
         Global.Instance.setWorldState(eStates.AngleSwiping);
+        Global.Instance.totalForce = power;
     }
 
     static T getRandomEnum<T>()

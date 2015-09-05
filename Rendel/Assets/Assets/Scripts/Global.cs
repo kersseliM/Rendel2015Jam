@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Global : MonoBehaviour 
 {
+    GameObject scriptHolder;
+    PowerSwipe pw;
+
     private static Global instance;
     public static Global Instance 
     {
@@ -13,6 +16,9 @@ public class Global : MonoBehaviour
 
 	void Awake ()
     {
+        scriptHolder = GameObject.Find("ScriptHolder");
+        pw = scriptHolder.GetComponent<PowerSwipe>();
+
         if (instance != this && instance == null)
         {  
             instance = this;
@@ -24,6 +30,11 @@ public class Global : MonoBehaviour
 	
     public void setWorldState(eStates state)
     {
+        if (state == eStates.PowerSwiping)
+        {
+            powerSwiping();
+        }
+        print(state);
         gameState = state;
     }
 
@@ -35,4 +46,9 @@ public class Global : MonoBehaviour
     }
 
     public float totalForce;
+
+    void powerSwiping()
+    {
+        pw.resetCurrentState();
+    }
 }
