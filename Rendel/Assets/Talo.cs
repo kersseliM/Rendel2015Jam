@@ -39,7 +39,7 @@ public class Talo : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.tag == "VALA" || col.gameObject.tag == "TaloPala")
+        if (col.gameObject.tag == "VALA")
         {
             releaseTheBodies();
             gameObject.SetActive(false);

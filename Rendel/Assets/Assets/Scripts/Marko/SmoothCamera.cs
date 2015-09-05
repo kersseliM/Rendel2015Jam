@@ -35,8 +35,8 @@ public class SmoothCamera : MonoBehaviour
     void setValues(cameraValues eCameraValues)
     {
         Vector3 cameraNewPos = target.position;
-        cameraNewPos.x = eCameraValues.adjustments.x;
-        cameraNewPos.y = eCameraValues.adjustments.y;
+        cameraNewPos.x = target.position.x+ eCameraValues.adjustments.x;
+        cameraNewPos.y = target.position.y+ eCameraValues.adjustments.y;
         cameraNewPos.z = -10;
         transform.position = Vector3.Lerp(transform.position, cameraNewPos, Time.deltaTime * eCameraValues.lerpSpeed);
 

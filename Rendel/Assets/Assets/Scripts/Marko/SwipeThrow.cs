@@ -41,10 +41,12 @@ public class SwipeThrow : MonoBehaviour
             }
         }
 
-
+        
 
         if (Global.Instance.gameState == eStates.AngleSwiping)
         {
+
+            /*
             if (Input.touchCount >= 1)
             {
                 Touch t = Input.GetTouch(0);
@@ -61,8 +63,7 @@ public class SwipeThrow : MonoBehaviour
                 }
             }
 
-#if UNITY_EDITOR
-
+            */
             if (Input.GetMouseButtonDown(0))
                 startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (Input.GetMouseButtonUp(0))
@@ -70,7 +71,7 @@ public class SwipeThrow : MonoBehaviour
                 startPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 calculateDirection();
             }
-#endif
+
         }
     }
 
