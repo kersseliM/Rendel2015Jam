@@ -34,18 +34,19 @@ public class HighScoreManager : MonoBehaviour
 
     public void SaveHighScore(string name, int score)
     {
+        print("highScore");
         List<Scores> HighScores = new List<Scores>();
 
         int i = 1;
 
-        while (i <= LeaderBoardLength && PlayerPrefs.HasKey("HighScore" + i + "score"))
-        {
-            Scores temp = new Scores();
-            temp.score = PlayerPrefs.GetInt("HighScore" + i + "score");
-            temp.name = PlayerPrefs.GetString("HighScore" + i + "name");
-            HighScores.Add(temp);
-            i++;
-        }
+        //while (i <= LeaderBoardLength && PlayerPrefs.HasKey("HighScore" + i + "score"))
+        //{
+        //    Scores temp = new Scores();
+            //temp.score = PlayerPrefs.GetInt("HighScore" + i + "score");
+            //temp.name = PlayerPrefs.GetString("HighScore" + i + "name");
+            //HighScores.Add(temp);
+            //i++;
+        //}
         if (HighScores.Count == 0)
         {
             Scores _temp = new Scores();

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class EndGame : MonoBehaviour
 {
     string name = "";
-    string score = "";
+    int score = 0;
     List<Scores> highScore;
 
     public InputField inputField;
@@ -25,9 +25,10 @@ public class EndGame : MonoBehaviour
 
     public void AddScore()
     {
-        score = mss.GetScore().ToString();
-        HighScoreManager._instance.SaveHighScore(name, System.Int32.Parse(score));
-        highScore = HighScoreManager._instance.GetHighScore();
+        score = mss.GetScore();
+        print(score);
+        HighScoreManager._instance.SaveHighScore(name, score);
+        //highScore = HighScoreManager._instance.GetHighScore();
     }
 
     public void GetLeaderboard()
@@ -39,6 +40,11 @@ public class EndGame : MonoBehaviour
     {
         mss = masterScoreSystem.GetComponent<MasterScoreSystem>();
         hsc = highScoreCanvas.GetComponent<Canvas>();
+    }
+
+    void Start()
+    {
+        highScore = new List<Scores>();
     }
 
     void Update()
