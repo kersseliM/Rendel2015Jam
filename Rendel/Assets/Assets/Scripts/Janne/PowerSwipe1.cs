@@ -144,7 +144,7 @@ public class PowerSwipe1 : MonoBehaviour
 
     void showReadyGo(float timer)
     {
-        print("CALLED READY_GO");
+        //print("CALLED READY_GO");
         if (timer > 1)
         {
             InfoText.text = "READY";

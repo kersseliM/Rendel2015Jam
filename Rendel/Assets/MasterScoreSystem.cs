@@ -35,9 +35,6 @@ public class MasterScoreSystem : MonoBehaviour
     {
         effects.Add(g);
     }
-	
-
-
 
     public void setEffect(Vector3 pos)
     {
@@ -49,6 +46,10 @@ public class MasterScoreSystem : MonoBehaviour
         currentScore += oneScoreValue;
     }
 
+    public int GetScore()
+    {
+        return currentScore;
+    }
 
     void Update()
     {
