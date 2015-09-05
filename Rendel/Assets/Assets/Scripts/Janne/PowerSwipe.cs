@@ -30,7 +30,7 @@ public class PowerSwipe : MonoBehaviour
     public float StartingNextPhaseDelay = 3;
 
     //Timers
-    float swipeTimer;
+    float SwipeTimer;
     float gameTime;
     float randomizer;
 
@@ -51,6 +51,7 @@ public class PowerSwipe : MonoBehaviour
     string givenSwipeDir;
     bool giveNewDirection;
     bool startSwipeTimer;
+    bool startIntroTimer;
 
     //Statistics
     int power;
@@ -62,10 +63,11 @@ public class PowerSwipe : MonoBehaviour
     void Start()
     {
         takeBackups();
-        swipeTimer = SwipeTime;
+        SwipeTimer = SwipeTime;
         giveNewDirection = true;
         startSwipeTimer = false;
         startingNextPhase = false;
+        startIntroTimer = true;
     }
 
     void Update()
@@ -75,10 +77,11 @@ public class PowerSwipe : MonoBehaviour
             if (!startingNextPhase)
             {
                 updateTimers();
-                showReadyGo();
+                //showReadyGo();
                 if (gameTime > IntroDelay)
                 {
                     startSwipeTimer = true;
+                    startIntroTimer = false;
                     if (giveNewDirection == true)
                     {
                         randomSwipeDir = getRandomEnum<SwipeDirection>();
@@ -88,7 +91,7 @@ public class PowerSwipe : MonoBehaviour
                         giveNewDirection = false;
                     }
                 }
-                if (swipeTimer > 0 && startSwipeTimer == true)
+                if (SwipeTimer > 0 && startSwipeTimer == true)
                 {
                     Swipe();
                     bool tempBool = isCorrectDirection();
@@ -109,9 +112,9 @@ public class PowerSwipe : MonoBehaviour
             if (!startingNextPhase)
             {
                 ///COUNTDOWN HERE
-                showCountDown(swipeTimer);
+                showCountDown(SwipeTimer);
                 PowerText.text = power.ToString();
-                if (swipeTimer <= 0)
+                if (SwipeTimer <= 0)
                 {
                     startNextPhase();
                 }
@@ -131,17 +134,17 @@ public class PowerSwipe : MonoBehaviour
         }
     }
 
-    void showReadyGo()
+    void showReadyGo(float timer)
     {
-        if (gameTime >= 0 && gameTime < IntroDelay - 1)
+        if (timer > 1)
         {
             InfoText.text = "READY";
         }
-        if (gameTime >= 3 && gameTime < 4)
+        if (timer <= 1 && timer > 0)
         {
             InfoText.text = "GO";
         }
-        if (gameTime >= 4)
+        if (timer >= 0)
         {
             InfoText.text = "";
         }
@@ -157,13 +160,17 @@ public class PowerSwipe : MonoBehaviour
 
     void updateTimers()
     {
-        if (startSwipeTimer == true)
+        if (startSwipeTimer)
         {
-            swipeTimer -= 1 * Time.deltaTime;
+            SwipeTimer -= 1 * Time.deltaTime;
         }
-        if (swipeTimer <= 0)
+        if (startIntroTimer)
         {
-            swipeTimer = 0;
+            IntroDelay -= 1 * Time.deltaTime;
+        }
+        if (SwipeTimer <= 0)
+        {
+            SwipeTimer = 0;
         }
         gameTime += 1 * Time.deltaTime;
     }
@@ -182,13 +189,15 @@ public class PowerSwipe : MonoBehaviour
     public void resetCurrentState()
     {
         print("Power Swipe Reset");
-        swipeTimer = swipeTimeBackup;
+        SwipeTimer = swipeTimeBackup;
         IntroDelay = introDelayBackup;
         PowerValue = powerValueBackup;
         gameTime = 0;
         startSwipeTimer = false;
         giveNewDirection = false;
         giveNewDirection = true;
+        startIntroTimer = true;
+        startingNextPhase = false;
     }
 
     void startNextPhase()
