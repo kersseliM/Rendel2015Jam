@@ -33,4 +33,6 @@ public class Global : MonoBehaviour
         explosion.transform.position = pos;
         explosion.SetActive(true);
     }
+
+    public float totalForce;
 }
