@@ -24,5 +24,5 @@ public class EndGame : MonoBehaviour
         highScore = HighScoreManager._instance.GetHighScore();
     }
 
-    public void Get
+    //public void Get
 }
