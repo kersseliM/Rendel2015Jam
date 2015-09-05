@@ -83,6 +83,7 @@ public class SwipeThrow : MonoBehaviour
 
     void calculateDirection()
     {
+       
         Vector3 direction = startPos - endPos;
         direction = direction.normalized;
         direction = Global.Instance.totalForce*direction;
@@ -91,6 +92,12 @@ public class SwipeThrow : MonoBehaviour
         Global.Instance.setWorldState(eStates.Flying);
         forceHolder = direction;
         muutaPaskaa();
+
+        foreach (Transform t in renderer.transform)
+        {
+            t.gameObject.SendMessage("a");
+        }
+
     }
 
     void roundVelocity()
@@ -114,7 +121,7 @@ public class SwipeThrow : MonoBehaviour
 
         foreach (Transform t in renderer.transform)
         {
-            t.gameObject.SendMessage("a");
+            t.gameObject.SendMessage("gg");
         }
     }
 

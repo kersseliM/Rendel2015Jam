@@ -4,7 +4,7 @@ using System.Collections;
 public class Global : MonoBehaviour 
 {
     GameObject scriptHolder;
-    PowerSwipe pw;
+    PowerSwipe1 pw;
 
     private static Global instance;
     public static Global Instance 
@@ -14,10 +14,16 @@ public class Global : MonoBehaviour
     public eStates gameState;
     GameObject explosion;
 
+    public AudioClip punch;
+    public AudioClip powerUp;
+    public AudioClip scream;
+    AudioSource _audioSource;
+
 	void Awake ()
     {
+        _audioSource = GetComponent<AudioSource>();
         scriptHolder = GameObject.Find("ScriptHolder");
-        pw = scriptHolder.GetComponent<PowerSwipe>();
+        pw = scriptHolder.GetComponent<PowerSwipe1>();
 
         if (instance != this && instance == null)
         {  
@@ -33,9 +39,37 @@ public class Global : MonoBehaviour
         if (state == eStates.PowerSwiping)
         {
             powerSwiping();
+            playPowerUp();
         }
-        print(state);
+        if (state == eStates.AngleSwiping)
+        {
+
+        }
+
+        if (state == eStates.Flying)
+        {
+            playScream();
+        }
+
         gameState = state;
+    }
+
+
+    public void playPunch()
+    {
+        _audioSource.clip = punch;
+        _audioSource.Play();
+    }
+    public void playPowerUp()
+    {
+        _audioSource.clip = powerUp;
+        _audioSource.Play();
+    }
+
+    public void playScream()
+    {
+        _audioSource.clip = scream;
+        _audioSource.Play();
     }
 
 
