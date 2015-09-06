@@ -77,6 +77,7 @@ public class PowerSwipe1 : MonoBehaviour
         startingNextPhase = false;
         startIntroTimer = true;
         doUpdateArrows = true;
+        Global.Instance.playPowerUp();
     }
 
     void Update()
@@ -110,8 +111,8 @@ public class PowerSwipe1 : MonoBehaviour
                         giveNewDirection = true;
                     }
                 }
-                updateArrows();
             }
+            updateArrows();
         }
     }
 
@@ -142,14 +143,10 @@ public class PowerSwipe1 : MonoBehaviour
                 }
             }
         }
-        testTimerIntro.text = "INTRO: " + IntroDelay.ToString();
-        testTimerSwipeTime.text = "SWIPETIME:" + SwipeTimer.ToString();
-        testTimerNextScene.text = "NEXTSCENE:" + StartingNextPhaseDelay.ToString();
     }
 
     void showReadyGo(float timer)
     {
-        //print("CALLED READY_GO");
         if (timer > 1)
         {
             InfoText.text = "READY";
@@ -166,22 +163,30 @@ public class PowerSwipe1 : MonoBehaviour
 
     void updateArrows()
     {
-        if (givenSwipeDir == "Up")
+        if (Global.Instance.gameState == eStates.PowerSwiping)
         {
-            arrowAnim.SetTrigger("Up");
+            if (givenSwipeDir == "Up")
+            {
+                arrowAnim.SetTrigger("Up");
+            }
+            if (givenSwipeDir == "Down")
+            {
+                arrowAnim.SetTrigger("Down");
+            }
+            if (givenSwipeDir == "Left")
+            {
+                arrowAnim.SetTrigger("Left");
+            }
+            if (givenSwipeDir == "Right")
+            {
+                arrowAnim.SetTrigger("Right");
+            }
         }
-        if (givenSwipeDir == "Down")
+        else
         {
-            arrowAnim.SetTrigger("Down");
+            arrowAnim.SetTrigger("None");
         }
-        if (givenSwipeDir == "Left")
-        {
-            arrowAnim.SetTrigger("Left");
-        }
-        if (givenSwipeDir == "Right")
-        {
-            arrowAnim.SetTrigger("Right");
-        }
+
     }
 
     void takeBackups()

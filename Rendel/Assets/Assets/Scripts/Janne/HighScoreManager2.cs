@@ -82,7 +82,7 @@ public class HighScoreManager2 : MonoBehaviour
             PlayerPrefs.SetInt("HighScore" + i + "score", HighScores[i - 1].score);
             i++;
         }
-
+        PlayerPrefs.Save();
     }
 
     public List<Scores> GetHighScore()
@@ -98,7 +98,6 @@ public class HighScoreManager2 : MonoBehaviour
             HighScores.Add(temp);
             i++;
         }
-
         return HighScores;
     }
 
