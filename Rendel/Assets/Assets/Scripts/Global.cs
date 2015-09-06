@@ -24,8 +24,11 @@ public class Global : MonoBehaviour
  public int numberOfRounds;
  public int currentRound;
 
-
+ public Animator valamansAnimator;
  public Canvas highscoreCanvas;
+ public Text finalSCOREtext;
+
+ public MasterScoreSystem mss;
 
 	void Awake ()
     {
@@ -42,16 +45,22 @@ public class Global : MonoBehaviour
         explosion = GameObject.Find("Explosion");
 	}
 	
+    public void resetScene()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
     public void setWorldState(eStates state)
     {
         if (state == eStates.PowerSwiping)
         {
+            valamansAnimator.SetTrigger("Idle");
             powerSwiping();
             playPowerUp();
             valamies.isKinematic = true;
         }
         if (state == eStates.AngleSwiping)
         {
+            valamansAnimator.SetTrigger("Idle");
             valamies.isKinematic = true;
         }
 
@@ -63,9 +72,10 @@ public class Global : MonoBehaviour
 
         if (state == eStates.Endgame)
         {
-            playPunch();
+      _audioSource.clip = scream;
+        _audioSource.Play();
             highscoreCanvas.enabled = true;
-    
+            finalSCOREtext.text = mss.getScore().ToString();
         }
 
         gameState = state;
@@ -82,6 +92,8 @@ public class Global : MonoBehaviour
     {
         _audioSource.clip = punch;
         _audioSource.Play();
+        valamansAnimator.SetTrigger("Hit");
+
     }
     public void playPowerUp()
     {
@@ -93,6 +105,7 @@ public class Global : MonoBehaviour
     {
         _audioSource.clip = scream;
         _audioSource.Play();
+        valamansAnimator.SetTrigger("Fly");
     }
 
 

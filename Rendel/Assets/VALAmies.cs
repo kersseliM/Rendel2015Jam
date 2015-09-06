@@ -11,6 +11,7 @@ public class VALAmies : MonoBehaviour
     bool isLerping;
     Rigidbody2D rb;
     bool noMore;
+    Animator anim;
 
 	void Start () 
     {
@@ -18,6 +19,7 @@ public class VALAmies : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.isKinematic = true;
         audiosource = GetComponent<AudioSource>();
+        anim = GetComponent<Animator>();
       
 	}
 

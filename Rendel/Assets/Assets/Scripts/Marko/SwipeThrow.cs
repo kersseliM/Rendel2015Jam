@@ -11,6 +11,7 @@ public class SwipeThrow : MonoBehaviour
     public GameObject renderer;
     bool checkIfStop;
     VALAmies valaMies;
+ 
     // Use this for initialization
     void Start()
     {
@@ -95,6 +96,8 @@ public class SwipeThrow : MonoBehaviour
 
         muutaPaskaa();
         _anim.SetTrigger("AnglePunch");
+      
+
 
         foreach (Transform t in renderer.transform)
         {

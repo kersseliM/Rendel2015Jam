@@ -11,14 +11,20 @@ public class MasterScoreSystem : MonoBehaviour
     public int poolLenght = 500;
 
     int currentEffect;
-    int currentScore;
-    int visibleScore;
+ int currentScore;
+   int visibleScore;
     public GameObject scoreEffect;
     public int oneScoreValue = 100;
 	// Use this for initialization
     public Rigidbody2D valaMies;
     public Vector3 noste;
 	
+
+    public int getScore()
+    {
+
+        return visibleScore;
+    }
     void Awake()
     {
         Instanse = this;
@@ -61,12 +67,15 @@ public class MasterScoreSystem : MonoBehaviour
 
     void Update()
     {
-  //      visibleScore = (int)Mathf.Lerp(visibleScore, currentScore, Time.deltaTime * lerpSpeed);
-        visibleScore =(int) valaMies.transform.position.x-4;
+
+
+        if (Global.Instance.gameState != eStates.Endgame)
+        {
+            //      visibleScore = (int)Mathf.Lerp(visibleScore, currentScore, Time.deltaTime * lerpSpeed);
+            visibleScore = (int)valaMies.transform.position.x - 4;
+
+        }
         scoreText.text = visibleScore.ToString();
-
-      
-
     }
     public float lerpSpeed = 4;
 

@@ -16,7 +16,7 @@ public class noNegativeVelocity : MonoBehaviour
         if (rb.velocity.x < 0)
         {
             Vector3 newVel = rb.velocity;
-            newVel.x = Mathf.Abs(rb.velocity.x);
+            newVel.x =  Mathf.Round( Mathf.Abs(rb.velocity.x));
             rb.velocity = newVel;
         }
 	}
