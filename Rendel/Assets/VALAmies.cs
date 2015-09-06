@@ -12,6 +12,7 @@ public class VALAmies : MonoBehaviour
     Rigidbody2D rb;
     bool noMore;
     Animator anim;
+    PolygonCollider2D col;
 
 	void Start () 
     {
@@ -20,7 +21,7 @@ public class VALAmies : MonoBehaviour
         rb.isKinematic = true;
         audiosource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
-      
+        col = GetComponent<PolygonCollider2D>();
 	}
 
     void FixedUpdate()
@@ -56,6 +57,9 @@ public class VALAmies : MonoBehaviour
         if (noMore)
             return;
 
+        col.enabled = false;
+
+
         rb.isKinematic = true;
         isLerping = true;
         time = Time.time;
@@ -66,7 +70,7 @@ public class VALAmies : MonoBehaviour
     }
     void endLerp()
     {
-
+        col.enabled = true;
         isLerping = false;
         Global.Instance.setWorldState(eStates.PowerSwiping);
         rb.rotation = 0;
@@ -83,12 +87,8 @@ public class VALAmies : MonoBehaviour
 
         if(Global.Instance.currentRound >= Global.Instance.numberOfRounds)
         {  
-      //      moveToHighscoreS
-
            Global.Instance.setWorldState(eStates.Endgame);
            noMore = true;
         }
-
-     
     }
 }
