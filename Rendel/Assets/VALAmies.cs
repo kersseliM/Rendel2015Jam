@@ -24,8 +24,24 @@ public class VALAmies : MonoBehaviour
         col = GetComponent<PolygonCollider2D>();
 	}
 
+
+
+
+    void Update()
+    {
+       if (Global.Instance.gameState == eStates.AngleSwiping || Global.Instance.gameState == eStates.PowerSwiping)
+            rb.MovePosition(targetPosition);
+
+       if (noMore)
+           if(Global.Instance.gameState != eStates.Endgame)
+           Global.Instance.setWorldState(eStates.Endgame);
+
+    }
+
     void FixedUpdate()
     {
+
+        print(Global.Instance.gameState);
         if(isLerping)
         {
             float timeSinceStarted = Time.time - time;
@@ -77,18 +93,18 @@ public class VALAmies : MonoBehaviour
         rb.angularVelocity = 0;
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
-        rb.MovePosition (targetPosition);
+   //     rb.MovePosition (targetPosition);
     }
 
 
     void checkIfEndState()
     {
         Global.Instance.currentRound++;
-
         if(Global.Instance.currentRound >= Global.Instance.numberOfRounds)
         {  
            Global.Instance.setWorldState(eStates.Endgame);
            noMore = true;
+           print("dndsnd");
         }
     }
 }

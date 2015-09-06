@@ -25,7 +25,7 @@ public class Global : MonoBehaviour
  public int currentRound;
 
  public Animator valamansAnimator;
- public Canvas highscoreCanvas;
+ public GameObject highscoreCanvas;
  public Text finalSCOREtext;
 
  public MasterScoreSystem mss;
@@ -66,15 +66,15 @@ public class Global : MonoBehaviour
 
         if (state == eStates.Flying)
         {
-            playPunch();
             Invoke("D", 1);
+            print("Flying");
         }
 
         if (state == eStates.Endgame)
         {
-      _audioSource.clip = scream;
-        _audioSource.Play();
-            highscoreCanvas.enabled = true;
+        //   _audioSource.clip = scream;
+              _audioSource.Play();
+              highscoreCanvas.SetActive(true);
             finalSCOREtext.text = mss.getScore().ToString();
         }
 
