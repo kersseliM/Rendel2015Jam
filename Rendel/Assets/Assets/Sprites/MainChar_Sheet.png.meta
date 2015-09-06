@@ -1,12 +1,14 @@
 fileFormatVersion: 2
 guid: c13016ff61a650544a27ac4f9131c737
-timeCreated: 1441454639
+timeCreated: 1441535397
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: MainChar_Sheet_0
     21300002: MainChar_Sheet_1
     21300004: MainChar_Sheet_2
+    21300006: MainChar_Sheet_3
+    21300008: MainChar_Sheet_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -60,7 +62,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
@@ -70,13 +72,33 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 96
-        y: 0
+        y: 96
         width: 96
         height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: MainChar_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 96
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: MainChar_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: MainChar_Sheet_4
       rect:
         serializedVersion: 2
         x: 192
