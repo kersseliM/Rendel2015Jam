@@ -85,6 +85,7 @@ public class SwipeThrow : MonoBehaviour
 
     void calculateDirection()
     {
+        checkIfStop = false;
         VALAman.isKinematic = false ;
         Vector3 direction = startPos - endPos;
         direction = direction.normalized;
