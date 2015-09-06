@@ -24,6 +24,7 @@ public class PowerSwipe1 : MonoBehaviour
     public Text timeLeftText;
     public Animator anim;
     public Animator arrowAnim;
+    public Material mat;
 
     //Test timers
     public Text testTimerIntro;
@@ -68,6 +69,8 @@ public class PowerSwipe1 : MonoBehaviour
     bool startingNextPhase;
     bool doUpdateArrows;
 
+    float imageAlphaLevel;
+
     void Start()
     {
         takeBackups();
@@ -78,10 +81,12 @@ public class PowerSwipe1 : MonoBehaviour
         startIntroTimer = true;
         doUpdateArrows = true;
         Global.Instance.playPowerUp();
+        imageAlphaLevel = 255;
     }
 
     void Update()
     {
+        //goImage.color.a = imageAlphaLevel;
         if (Global.Instance.gameState == eStates.PowerSwiping)
         {
             if (!startingNextPhase)
