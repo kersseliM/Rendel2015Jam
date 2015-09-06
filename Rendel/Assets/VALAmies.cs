@@ -10,11 +10,14 @@ public class VALAmies : MonoBehaviour
     float timeTakenToLerp =2;
     bool isLerping;
     Rigidbody2D rb;
+    bool noMore;
 
 	void Start () 
     {
         targetPosition = transform.position;
         rb = GetComponent<Rigidbody2D>();
+        rb.isKinematic = true;
+        audiosource = GetComponent<AudioSource>();
       
 	}
 
@@ -43,14 +46,20 @@ public class VALAmies : MonoBehaviour
             rb.velocity = rb.velocity*2;
 
     }
-
+    AudioSource audiosource;
     public void startLerp()
     {
+        checkIfEndState();
+
+        if (noMore)
+            return;
+
         rb.isKinematic = true;
         isLerping = true;
         time = Time.time;
         startPosition = transform.position;
         rb.velocity = Vector2.zero;
+        audiosource.Play();
     
     }
     void endLerp()
@@ -61,7 +70,23 @@ public class VALAmies : MonoBehaviour
         rb.rotation = 0;
         rb.angularVelocity = 0;
         rb.velocity = Vector2.zero;
-        rb.isKinematic = false;
+        rb.isKinematic = true;
+        rb.MovePosition (targetPosition);
+    }
 
+
+    void checkIfEndState()
+    {
+        Global.Instance.currentRound++;
+
+        if(Global.Instance.currentRound >= Global.Instance.numberOfRounds)
+        {  
+      //      moveToHighscoreS
+
+           Global.Instance.setWorldState(eStates.Endgame);
+           noMore = true;
+        }
+
+     
     }
 }

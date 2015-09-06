@@ -84,7 +84,7 @@ public class SwipeThrow : MonoBehaviour
 
     void calculateDirection()
     {
-       
+        VALAman.isKinematic = false ;
         Vector3 direction = startPos - endPos;
         direction = direction.normalized;
         direction = Global.Instance.totalForce*direction;
@@ -95,13 +95,13 @@ public class SwipeThrow : MonoBehaviour
 
         muutaPaskaa();
         _anim.SetTrigger("AnglePunch");
+
         foreach (Transform t in renderer.transform)
         {
             t.gameObject.SendMessage("a");
         }
 
         VALAman.velocity = direction;
-        print(direction);
 
     }
 

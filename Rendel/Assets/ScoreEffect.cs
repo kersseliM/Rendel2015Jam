@@ -14,11 +14,12 @@ public class ScoreEffect : MonoBehaviour
 
     void Awake()
     {
-        MasterScoreSystem.Instanse.addMeToList(gameObject);
+       
     }
 
     void Start()
     {
+        MasterScoreSystem.Instanse.addMeToList(gameObject);
         sr = GetComponent<SpriteRenderer>();
     }
 

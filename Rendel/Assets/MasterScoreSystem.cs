@@ -16,10 +16,13 @@ public class MasterScoreSystem : MonoBehaviour
     public GameObject scoreEffect;
     public int oneScoreValue = 100;
 	// Use this for initialization
+    public Rigidbody2D valaMies;
+    public Vector3 noste;
 	
     void Awake()
     {
         Instanse = this;
+        
     }
     
     void Start () 
@@ -36,6 +39,7 @@ public class MasterScoreSystem : MonoBehaviour
         effects.Add(g);
     }
 
+    public float masxNosteYvelocity = 20;
     public void setEffect(Vector3 pos)
     {
         effects[currentEffect].transform.position = pos;
@@ -43,7 +47,11 @@ public class MasterScoreSystem : MonoBehaviour
         currentEffect++;
         if (currentEffect >= poolLenght)
             currentEffect = 0;
-        currentScore += oneScoreValue;
+     //   currentScore += oneScoreValue;
+
+        if(valaMies.velocity.y < masxNosteYvelocity)
+        valaMies.AddForce(noste,ForceMode2D.Impulse);
+
     }
 
     public int GetScore()
@@ -53,8 +61,11 @@ public class MasterScoreSystem : MonoBehaviour
 
     void Update()
     {
-        visibleScore = (int)Mathf.Lerp(visibleScore, currentScore, Time.deltaTime * lerpSpeed);
+  //      visibleScore = (int)Mathf.Lerp(visibleScore, currentScore, Time.deltaTime * lerpSpeed);
+        visibleScore =(int) valaMies.transform.position.x-4;
         scoreText.text = visibleScore.ToString();
+
+      
 
     }
     public float lerpSpeed = 4;

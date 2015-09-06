@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Global : MonoBehaviour 
 {
@@ -17,7 +18,14 @@ public class Global : MonoBehaviour
     public AudioClip punch;
     public AudioClip powerUp;
     public AudioClip scream;
+
     AudioSource _audioSource;
+ public   Rigidbody2D valamies;
+ public int numberOfRounds;
+ public int currentRound;
+
+
+ public Canvas highscoreCanvas;
 
 	void Awake ()
     {
@@ -40,20 +48,35 @@ public class Global : MonoBehaviour
         {
             powerSwiping();
             playPowerUp();
+            valamies.isKinematic = true;
         }
         if (state == eStates.AngleSwiping)
         {
-
+            valamies.isKinematic = true;
         }
 
         if (state == eStates.Flying)
         {
-            playScream();
+            playPunch();
+            Invoke("D", 1);
+        }
+
+        if (state == eStates.Endgame)
+        {
+            playPunch();
+            highscoreCanvas.enabled = true;
+    
         }
 
         gameState = state;
     }
 
+
+    void D()
+    {
+        playScream();
+
+    }
 
     public void playPunch()
     {
