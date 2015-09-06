@@ -67,6 +67,8 @@ public class EndGame : MonoBehaviour
     {
         if (Global.Instance.gameState == eStates.Endgame)
         {
+            if(hsc.enabled == false)
+            hsc.enabled = true;
             if (loadHighscores)
             {
                 foreach (Scores _score in highScore)

@@ -23,7 +23,7 @@ public class MasterScoreSystem : MonoBehaviour
     public int getScore()
     {
 
-        return visibleScore;
+        return visibleScore *100;
     }
     void Awake()
     {
@@ -60,11 +60,6 @@ public class MasterScoreSystem : MonoBehaviour
 
     }
 
-    public int GetScore()
-    {
-        return currentScore;
-    }
-
     void Update()
     {
 
@@ -72,10 +67,10 @@ public class MasterScoreSystem : MonoBehaviour
         if (Global.Instance.gameState != eStates.Endgame)
         {
             //      visibleScore = (int)Mathf.Lerp(visibleScore, currentScore, Time.deltaTime * lerpSpeed);
-            visibleScore = (int)valaMies.transform.position.x - 4;
+            visibleScore = (int)valaMies.transform.position.x - 5;
 
         }
-        scoreText.text = visibleScore.ToString();
+        scoreText.text =(100* visibleScore).ToString();
     }
     public float lerpSpeed = 4;
 

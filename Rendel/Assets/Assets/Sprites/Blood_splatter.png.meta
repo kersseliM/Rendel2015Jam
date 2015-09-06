@@ -1,9 +1,15 @@
 fileFormatVersion: 2
 guid: 956ffa2ff59c1714b8bfa4941edbec1c
-timeCreated: 1441535902
+timeCreated: 1441544520
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Blood_splatter_0
+    21300002: Blood_splatter_1
+    21300004: Blood_splatter_2
+    21300006: Blood_splatter_3
+    21300008: Blood_splatter_4
+    21300010: Blood_splatter_5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -29,26 +35,86 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
-    aniso: -1
+    filterMode: 0
+    aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: .5, y: .5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 0, y: 0, z: 55, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Blood_splatter_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 27
+        height: 21
+      alignment: 4
+      pivot: {x: 0, y: .5}
+      border: {x: 0, y: 0, z: 8, w: 0}
+    - name: Blood_splatter_1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 0
+        width: 27
+        height: 21
+      alignment: 4
+      pivot: {x: 0, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Blood_splatter_2
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 0
+        width: 27
+        height: 21
+      alignment: 4
+      pivot: {x: 0, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Blood_splatter_3
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 0
+        width: 27
+        height: 21
+      alignment: 4
+      pivot: {x: 0, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Blood_splatter_4
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 27
+        height: 21
+      alignment: 4
+      pivot: {x: 0, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Blood_splatter_5
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 0
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
   assetBundleName: 
